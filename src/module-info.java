@@ -4,5 +4,5 @@
 /**
  * 
  */
-module academicNexus {
+module Teste {
 }
