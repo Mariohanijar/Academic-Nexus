@@ -1,18 +1,18 @@
 package academicNexus;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Course extends Academy {
     private String description;
-    private ArrayList<Student> students;
+    private ArrayList<Student> students = new ArrayList<Student>();
     private Professor professor;
     private String[] subjects = new String[5];
 
-    public Course(String name, int ID, int yearOfFoundation, String description, Professor professor, String[] subjects) {
+    public Course(String name, int ID, int yearOfFoundation, String description, Professor professor) {
         super(name, ID, yearOfFoundation);
         this.description = description;
         this.professor = professor;
-        this.subjects = subjects;
     }
 
     public String getDescription() {
@@ -52,5 +52,19 @@ public class Course extends Academy {
     public Professor getProfessor() {
         return professor;
     }
+    public void printStudents() {
+        for (Student student : this.students) {
+            System.out.println(student);
+        }
+    }
+
+	@Override
+	public String toString() {
+		return "Course " + getName() + ", ID:" + getID()
+		+ ", Year Of Foundation: " + getYearOfFoundation() + ", description: " + description + ", professor: " + professor;
+	}
+
+    
+    
 }
 

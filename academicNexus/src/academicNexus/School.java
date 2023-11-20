@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class School extends Academy {
     private String adress;
     private Director director;
-    private ArrayList<Course> courses;
-    private ArrayList<Professor> professors;
-    private ArrayList<Student> students;
+    private ArrayList<Course> courses = new ArrayList<Course>();
+    private ArrayList<Professor> professors = new ArrayList<Professor>();
+    private ArrayList<Student> students = new ArrayList<Student>();
 
     public School(String name, String adress, int ID, int yearOfFoundation, Director director) {
         super(name, ID, yearOfFoundation);
@@ -72,5 +72,12 @@ public class School extends Academy {
             System.out.println(student);
         }
     }
+
+	@Override
+	public String toString() {
+		return "Name " + getName() + ", ID: " + getID()
+		+ ", Year of Foundation: " + getYearOfFoundation() + ", adress: " + adress + ", director: " + director + ", courses: " + courses + ", professors: "
+				+ professors + ", students: " + students;
+	}
 
 }
