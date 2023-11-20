@@ -1,13 +1,11 @@
 package academicNexus;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Course extends Academy {
     private String description;
     private ArrayList<Student> students = new ArrayList<Student>();
     private Professor professor;
-    private String[] subjects = new String[5];
 
     public Course(String name, int ID, int yearOfFoundation, String description, Professor professor) {
         super(name, ID, yearOfFoundation);
@@ -19,16 +17,8 @@ public class Course extends Academy {
         return description;
     }
 
-    public String[] getSubjects() {
-        return subjects;
-    }
-
     public ArrayList<Student> getStudents() {
         return students;
-    }
-
-    public void setSubjects(String[] subjects) {
-        this.subjects = subjects;
     }
 
     public void setDescription(String description) {
@@ -52,19 +42,48 @@ public class Course extends Academy {
     public Professor getProfessor() {
         return professor;
     }
+
     public void printStudents() {
         for (Student student : this.students) {
             System.out.println(student);
         }
     }
 
+    public void printRelatory() {
+        System.out.println("Students: ");
+        this.printStudents();
+
+        System.out.println("Exams: ");
+
+        for (Student student : this.students) {
+            System.out.println(student.getName() + ": ");
+            student.printExams(this);
+        }
+
+        System.out.println("Grade average: ");
+        double sum = 0;
+        for (Student student : this.students) {
+            sum += student.getGradeAverage(this);
+        }
+
+        double average = sum / this.students.size();
+
+        System.out.println(average);
+
+        sum = 0;
+        
+        System.out.println("Standard Deviation: ");
+        for (Student student : this.students) {
+            sum += Math.pow(student.getGradeAverage(this) - average, 2);
+        }
+        double standardDeviation = Math.sqrt(sum / this.students.size());
+
+        System.out.println(standardDeviation);
+    }
+
 	@Override
 	public String toString() {
 		return "Course " + getName() + ", ID:" + getID()
 		+ ", Year Of Foundation: " + getYearOfFoundation() + ", description: " + description + ", professor: " + professor;
-	}
-
-    
-    
+	}  
 }
-

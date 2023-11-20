@@ -1,28 +1,51 @@
 package academicNexus;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Student extends Academic {
     public String level;
-    public Course course;
-    public int[] grades = new int[5];
+    public ArrayList<Course> courses = new ArrayList<Course>();
+    public ArrayList<Exam> exams = new ArrayList<Exam>();
 
-    public Student(String name, String email, int ID, String CPF, String inscriptionDate, String level, Course course) {
+    public Student(String name, String email, int ID, String CPF, String inscriptionDate, String level) {
         super(name, email, ID, CPF, inscriptionDate);
         this.level = level;
-        this.course = course;
+    }
+
+    public void addExam(Exam exam) {
+        exams.add(exam);
+    }
+
+    public void removeExam(Exam exam) {
+        exams.remove(exam);
+    }
+
+    public double getGradeAverage(Course course) {
+        double sum = 0;
+        for (Exam exam : this.exams) {
+            if(exam.getCourse() == course) {
+                for(int i = 0; i < 2; i++) {
+                    sum += exam.getGrades()[i];
+                }
+            }
+        }
+        return sum / 2;
     }
 
     public String getLevel() {
         return level;
     }
 
-    public Course getCourse() {
-        return course;
+   public void addCourse(Course course) {
+        courses.add(course);
     }
 
-    public int[] getGrades() {
-        return grades;
+    public void removeCourse(Course course) {
+        courses.remove(course);
+    }
+
+    public ArrayList<Course> getCourses() {
+        return courses;
     }
 
     public void setLevel(String level) {
@@ -31,20 +54,18 @@ public class Student extends Academic {
         }
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    public void setGrades(int[] grades) {
-        this.grades = grades;
+    public void printExams(Course course) {
+        for (Exam exam : this.exams) {
+            if(exam.getCourse() == course) {
+                System.out.println(exam);
+            }
+        }
     }
 
 	@Override
 	public String toString() {
 		return "Name: "	+ getName() + ", Email: " + getEmail() + ", ID: " + getID() + ", CPF: " + getCPF()
-				+ ", Inscription Date: " + getInscriptionDate() + "level: " + level + ", course: " + course + ", grades; ";
-		//JOAO NÃO SE ESQUECA DO ARRAY DE GRADES QUE FOI RETIRADO PARA VC CONSERTAR
+				+ ", Inscription Date: " + getInscriptionDate() + "level: " + level + ", Courses: " + courses + ", Exams: " + exams;
 	}
     
 }
-
