@@ -1,9 +1,11 @@
 package academicNexus;
 
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class App {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 		
 		//Professor
@@ -50,6 +52,17 @@ public class App {
         johnArts.addExam(new Exam(engenhariaDeSoftware, 100, 53));
 
         //System.out.println(johnArts);
+        
+
+		String path = "C:\\Users\\carol\\Desktop\\data.txt";
+		
+		String content = "o igor é baitola e esse jogo é multi";
+		
+		FileWriter writer = new FileWriter(path);
+		
+		writer.write(cesupa.toString());
+		
+		writer.close();
 		
 	}
 }
