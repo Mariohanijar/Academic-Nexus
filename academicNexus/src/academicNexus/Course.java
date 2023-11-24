@@ -48,6 +48,35 @@ public class Course extends Academy {
             System.out.println(student);
         }
     }
+    public double getClassAverage() {
+    	double sum = 0;
+        for (Student student : this.students) {
+            sum += student.getGradeAverage(this);
+        }
+
+        double average = sum / this.students.size();
+        return average;
+    }
+    
+    public double getClassStandardDeviation() {
+    	double sum = 0;
+        for (Student student : this.students) {
+            sum += student.getGradeAverage(this);
+        }
+
+        double average = sum / this.students.size();
+        
+        double sumOfSquares = 0;
+        
+        for (Student student : this.students) {
+        	sumOfSquares += (student.getGradeAverage(this) - average);
+        }
+        sumOfSquares /= this.students.size();
+        
+        
+
+        return Math.sqrt(sumOfSquares);
+    }
 
     public void printRelatory() {
         System.out.println("Students: ");

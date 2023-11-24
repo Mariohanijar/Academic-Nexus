@@ -15,7 +15,31 @@ public class School extends Academy {
         this.director = director;
     }
 
-    public String getAdress() {
+    public ArrayList<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(ArrayList<Course> courses) {
+		this.courses = courses;
+	}
+
+	public ArrayList<Professor> getProfessors() {
+		return professors;
+	}
+
+	public void setProfessors(ArrayList<Professor> professors) {
+		this.professors = professors;
+	}
+
+	public ArrayList<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(ArrayList<Student> students) {
+		this.students = students;
+	}
+
+	public String getAdress() {
         return adress;
     }
 
