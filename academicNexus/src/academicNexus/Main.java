@@ -85,10 +85,10 @@ public class Main {
 
         JLabel cadastroLabel = new JLabel("Painel de Cadastro");
         cadastroLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-        cadastroLabel.setBounds(50, 20, 300, 30);
+        cadastroLabel.setBounds(266, 11, 193, 30);
 
         JButton voltarInicialButton = new JButton("Voltar");
-        voltarInicialButton.setBounds(50, 400, 100, 30);
+        voltarInicialButton.setBounds(126, 398, 100, 30);
 
         voltarInicialButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -398,6 +398,16 @@ public class Main {
         nomeAlunoLabel.setBounds(50, 80, 150, 20);
         JTextField nomeAlunoField = new JTextField();
         nomeAlunoField.setBounds(200, 80, 150, 20);
+
+        JLabel nota1 = new JLabel("Nota da Avaliação 1:");
+        nota1.setBounds(50, 80, 150, 20);
+        JTextField nota1Field = new JTextField();
+        nota1Field.setBounds(200, 80, 150, 20);
+        
+        JLabel nota2 = new JLabel("Nota do Avaliação 2:");
+        nota2.setBounds(50, 80, 150, 20);
+        JTextField nota2Field = new JTextField();
+        nota2Field.setBounds(200, 80, 150, 20);
 
         JLabel idAlunoLabel = new JLabel("ID do Aluno:");
         idAlunoLabel.setBounds(50, 110, 150, 20);
@@ -764,8 +774,7 @@ public class Main {
         JTextArea relatorioTextArea = new JTextArea();
         relatorioTextArea.setBounds(28, 209, 700, 200);
         relatorioTextArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(relatorioTextArea);
-        scrollPane.setBounds(731, 209, 17, 200);
+        
 
       
         JButton voltarVerificacaoButton = new JButton("Voltar");
@@ -778,7 +787,6 @@ public class Main {
         });
 
         
-        relatorioCursoPanel.add(scrollPane);
         relatorioCursoPanel.add(escolasLabel);
         relatorioCursoPanel.add(escolherCursosLabel);
         relatorioCursoPanel.add(escolherCursosPanel);
@@ -836,10 +844,10 @@ public class Main {
 
         JLabel verificacaoLabel = new JLabel("Painel de Verificação");
         verificacaoLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-        verificacaoLabel.setBounds(50, 20, 300, 30);
+        verificacaoLabel.setBounds(302, 21, 300, 30);
 
         JButton voltarInicialButton2 = new JButton("Voltar");
-        voltarInicialButton2.setBounds(50, 400, 100, 30);
+        voltarInicialButton2.setBounds(175, 395, 100, 30);
 
         voltarInicialButton2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
