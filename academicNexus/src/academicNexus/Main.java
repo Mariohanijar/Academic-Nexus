@@ -31,7 +31,7 @@ public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
 
-		try (ObjectInputStream schoolInput = new ObjectInputStream(new FileInputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\schools.bin"))) {
+		try (ObjectInputStream schoolInput = new ObjectInputStream(new FileInputStream("C:\\Users\\mario\\Desktop\\Academic-Nexus\\academicNexus\\schools.bin"))) {
 		    while (true) {
 		        School school = (School) schoolInput.readObject();
 		        schoolsList.add(school);
@@ -42,7 +42,7 @@ public class Main {
 		    e.printStackTrace();
 		}
 		
-		try (ObjectInputStream directorInput = new ObjectInputStream(new FileInputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\directors.bin"))) {
+		try (ObjectInputStream directorInput = new ObjectInputStream(new FileInputStream("C:\\Users\\mario\\Desktop\\Academic-Nexus\\academicNexus\\directors.bin"))) {
 		    while (true) {
 		        Director director = (Director) directorInput.readObject();
 		        directorsList.add(director);
@@ -53,7 +53,7 @@ public class Main {
 		    e.printStackTrace();
 		}
 		
-		try (ObjectInputStream professorInput = new ObjectInputStream(new FileInputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\professors.bin"))) {
+		try (ObjectInputStream professorInput = new ObjectInputStream(new FileInputStream("C:\\Users\\mario\\Desktop\\Academic-Nexus\\academicNexus\\professors.bin"))) {
 		    while (true) {
 		        Professor professor = (Professor) professorInput.readObject();
 		        professorsList.add(professor);
@@ -64,7 +64,7 @@ public class Main {
 		    e.printStackTrace();
 		}
 		
-		try (ObjectInputStream studentInput = new ObjectInputStream(new FileInputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\students.bin"))) {
+		try (ObjectInputStream studentInput = new ObjectInputStream(new FileInputStream("C:\\Users\\mario\\Desktop\\Academic-Nexus\\academicNexus\\students.bin"))) {
 		    while (true) {
 		        Student student = (Student) studentInput.readObject();
 		        studentList.add(student);
@@ -75,7 +75,7 @@ public class Main {
 		    e.printStackTrace();
 		}
 		
-		try (ObjectInputStream courseInput = new ObjectInputStream(new FileInputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\courses.bin"))) {
+		try (ObjectInputStream courseInput = new ObjectInputStream(new FileInputStream("C:\\Users\\mario\\Desktop\\Academic-Nexus\\academicNexus\\courses.bin"))) {
 		    while (true) {
 		        Course course = (Course) courseInput.readObject();
 		        courseList.add(course);
@@ -85,10 +85,10 @@ public class Main {
 		} catch (IOException | ClassNotFoundException e) {
 		    e.printStackTrace();
 		}
-	     readObjects("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\directors.bin", directorsList, Director.class);
-	     readObjects("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\professors.bin", professorsList, Professor.class);
-	     readObjects("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\students.bin", studentList, Student.class);
-	     readObjects("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\courses.bin", courseList, Course.class);
+	     readObjects("C:\\Users\\mario\\Desktop\\Academic-Nexus\\academicNexus\\directors.bin", directorsList, Director.class);
+	     readObjects("C:\\Users\\mario\\Desktop\\Academic-Nexus\\academicNexus\\professors.bin", professorsList, Professor.class);
+	     readObjects("C:\\Users\\mario\\Desktop\\Academic-Nexus\\academicNexus\\students.bin", studentList, Student.class);
+	     readObjects("C:\\Users\\mario\\Desktop\\Academic-Nexus\\academicNexus\\courses.bin", courseList, Course.class);
 
 		JFrame frame = new JFrame("ACADEMIC NEXUS");
 		frame.setSize(800, 500);
@@ -281,7 +281,7 @@ public class Main {
 						directorsList.add(director);
 
 						try {
-						    ObjectOutputStream directorOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\directors.bin"));
+						    ObjectOutputStream directorOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\mario\\Desktop\\Academic-Nexus\\academicNexus\\directors.bin"));
 
 						    for (Director d : directorsList) {
 						        directorOutput.writeObject(d);
@@ -295,7 +295,7 @@ public class Main {
 						schoolsList.add(school);
 
 						try {
-						    ObjectOutputStream schoolOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\schools.bin"));
+						    ObjectOutputStream schoolOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\mario\\Desktop\\Academic-Nexus\\academicNexus\\schools.bin"));
 
 						    for (School s : schoolsList) {
 						        schoolOutput.writeObject(s);
@@ -418,7 +418,7 @@ public class Main {
 						escola.addProfessor(professor);
 
 						try {
-						    ObjectOutputStream professorOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\professors.bin"));
+						    ObjectOutputStream professorOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\mario\\Desktop\\Academic-Nexus\\academicNexus\\professors.bin"));
 
 						    for (Professor p : professorsList) {
 						    	professorOutput.writeObject(p);
@@ -430,7 +430,7 @@ public class Main {
 						}
 						
 						try {
-						    ObjectOutputStream schoolOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\schools.bin"));
+						    ObjectOutputStream schoolOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\mario\\Desktop\\Academic-Nexus\\academicNexus\\schools.bin"));
 
 						    for (School s : schoolsList) {
 						        schoolOutput.writeObject(s);
@@ -554,7 +554,7 @@ public class Main {
 						escola.addStudent(student);
 
 						try {
-						    ObjectOutputStream studentOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\students.bin"));
+						    ObjectOutputStream studentOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\mario\\Desktop\\Academic-Nexus\\academicNexus\\students.bin"));
 
 						    for (Student st : studentList) {
 						    	studentOutput.writeObject(st);
@@ -566,7 +566,7 @@ public class Main {
 						}
 						
 						try {
-						    ObjectOutputStream schoolOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\schools.bin"));
+						    ObjectOutputStream schoolOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\mario\\Desktop\\Academic-Nexus\\academicNexus\\schools.bin"));
 
 						    for (School s : schoolsList) {
 						        schoolOutput.writeObject(s);
@@ -699,7 +699,7 @@ public class Main {
 						courseList.add(curso);
 
 						try {
-						    ObjectOutputStream courseOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\courses.bin"));
+						    ObjectOutputStream courseOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\mario\\Desktop\\Academic-Nexus\\academicNexus\\courses.bin"));
 
 						    for (Course c : courseList) {
 						    	courseOutput.writeObject(c);
@@ -711,7 +711,7 @@ public class Main {
 						}
 						
 						try {
-						    ObjectOutputStream schoolOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\schools.bin"));
+						    ObjectOutputStream schoolOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\mario\\Desktop\\Academic-Nexus\\academicNexus\\schools.bin"));
 
 						    for (School s : schoolsList) {
 						        schoolOutput.writeObject(s);
