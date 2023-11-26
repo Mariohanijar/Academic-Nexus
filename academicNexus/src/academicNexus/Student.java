@@ -6,6 +6,7 @@ public class Student extends Academic {
     public String level;
     public ArrayList<Course> courses = new ArrayList<Course>();
     public ArrayList<Exam> exams = new ArrayList<Exam>();
+    private static final long serialVersionUID = 1l;
 
     public Student(String name, String email, int ID, String CPF, String inscriptionDate, String level) {
         super(name, email, ID, CPF, inscriptionDate);

@@ -5,8 +5,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,24 +22,70 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-
-
-
-
-
-
 public class Main {
-	private static JTextField textField;
-	private static JTextField textField_1;
 	private static ArrayList<Director> directorsList = new ArrayList<>();
 	private static ArrayList<School> schoolsList = new ArrayList<>();
 	private static ArrayList<Professor> professorsList = new ArrayList<>();
 	private static ArrayList<Student> studentList = new ArrayList<>();
 	private static ArrayList<Course> courseList = new ArrayList<>();
     
-	    
+	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
 
-    public static void main(String[] args) {
+		try (ObjectInputStream schoolInput = new ObjectInputStream(new FileInputStream("data/schools.bin"))) {
+		    while (true) {
+		        School school = (School) schoolInput.readObject();
+		        schoolsList.add(school);
+		    }
+		} catch (EOFException e) {
+		    
+		} catch (IOException | ClassNotFoundException e) {
+		    e.printStackTrace();
+		}
+		
+		try (ObjectInputStream directorInput = new ObjectInputStream(new FileInputStream("data/directors.bin"))) {
+		    while (true) {
+		        Director director = (Director) directorInput.readObject();
+		        directorsList.add(director);
+		    }
+		} catch (EOFException e) {
+		    
+		} catch (IOException | ClassNotFoundException e) {
+		    e.printStackTrace();
+		}
+		
+		try (ObjectInputStream professorInput = new ObjectInputStream(new FileInputStream("data/professors.bin"))) {
+		    while (true) {
+		        Professor professor = (Professor) professorInput.readObject();
+		        professorsList.add(professor);
+		    }
+		} catch (EOFException e) {
+		   
+		} catch (IOException | ClassNotFoundException e) {
+		    e.printStackTrace();
+		}
+		
+		try (ObjectInputStream studentInput = new ObjectInputStream(new FileInputStream("data/students.bin"))) {
+		    while (true) {
+		        Student student = (Student) studentInput.readObject();
+		        studentList.add(student);
+		    }
+		} catch (EOFException e) {
+		   
+		} catch (IOException | ClassNotFoundException e) {
+		    e.printStackTrace();
+		}
+		
+		try (ObjectInputStream courseInput = new ObjectInputStream(new FileInputStream("data/courses.bin"))) {
+		    while (true) {
+		        Course course = (Course) courseInput.readObject();
+		        courseList.add(course);
+		    }
+		} catch (EOFException e) {
+		    
+		} catch (IOException | ClassNotFoundException e) {
+		    e.printStackTrace();
+		}    
+
         JFrame frame = new JFrame("ACADEMIC NEXUS");
         frame.setSize(800, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -218,14 +270,40 @@ public class Main {
             	if (camposCadastroPreenchidos(nomeDirField, idDirField, cpfDirField, emailDirField, dataContratacaoField, nomeInstField, enderecoInstField, idInstField, anoFundacaoInstField)) {
                
             		
-                    Director director = new Director(nomeDirField.getText(), emailDirField.getText(), Integer.parseInt(idDirField.getText()), cpfDirField.getText(), dataContratacaoField.getText());
-                    
-                    School school = new School(nomeInstField.getText(), enderecoInstField.getText(), Integer.parseInt(idInstField.getText()), Integer.parseInt(anoFundacaoInstField.getText()), director);
 
-                  
-                    directorsList.add(director);
-                    
-                    schoolsList.add(school);
+					Director director = new Director(nomeDirField.getText(), emailDirField.getText(),
+							Integer.parseInt(idDirField.getText()), cpfDirField.getText(),
+							dataContratacaoField.getText());
+
+					School school = new School(nomeInstField.getText(), enderecoInstField.getText(),
+						    Integer.parseInt(idInstField.getText()), Integer.parseInt(anoFundacaoInstField.getText()), director);
+						directorsList.add(director);
+
+						try {
+						    ObjectOutputStream directorOutput = new ObjectOutputStream(new FileOutputStream("data/directors.bin"));
+
+						    for (Director d : directorsList) {
+						        directorOutput.writeObject(d);
+						    }
+
+						    directorOutput.close();
+						} catch (IOException e1) {
+						    e1.printStackTrace();
+						}
+
+						schoolsList.add(school);
+
+						try {
+						    ObjectOutputStream schoolOutput = new ObjectOutputStream(new FileOutputStream("data/schools.bin"));
+
+						    for (School s : schoolsList) {
+						        schoolOutput.writeObject(s);
+						    }
+
+						    schoolOutput.close();
+						} catch (IOException e1) {
+						    e1.printStackTrace();
+						}
                  
                     
                     JOptionPane.showMessageDialog(null, "        Cadastro Realizado");
@@ -332,10 +410,6 @@ public class Main {
              
                     Professor professor = new Professor(nomeProfField.getText(), emailProfField.getText(), Integer.parseInt(idProfField.getText()), cpfProfField.getText(), dataContratacaoProfField.getText());
 
-
-                    
-
-                   
                     School escola = null;
                     for (School s : schoolsList) {
                         if (s.getName().equals(escolherEscola.getText())) {
@@ -348,6 +422,31 @@ public class Main {
                     if (escola != null) {
                     	professorsList.add(professor);
                         escola.addProfessor(professor);
+                        
+                        try {
+						    ObjectOutputStream professorOutput = new ObjectOutputStream(new FileOutputStream("data/professors.bin"));
+
+						    for (Professor p : professorsList) {
+						    	professorOutput.writeObject(p);
+						    }
+
+						    professorOutput.close();
+						} catch (IOException e1) {
+						    e1.printStackTrace();
+						}
+						
+						try {
+						    ObjectOutputStream schoolOutput = new ObjectOutputStream(new FileOutputStream("data/schools.bin"));
+
+						    for (School s : schoolsList) {
+						        schoolOutput.writeObject(s);
+						    }
+
+						    schoolOutput.close();
+						} catch (IOException e1) {
+						    e1.printStackTrace();
+						}
+						
                         JOptionPane.showMessageDialog(null, "Cadastro de Professor Realizado na Escola: " + escola.getName());
                         cardLayout.show(cardPanel, "Cadastro");
 
@@ -462,6 +561,31 @@ public class Main {
                     if (escola != null) {
                     	studentList.add(student);
                         escola.addStudent(student);
+                        
+                        try {
+						    ObjectOutputStream studentOutput = new ObjectOutputStream(new FileOutputStream("data/students.bin"));
+
+						    for (Student st : studentList) {
+						    	studentOutput.writeObject(st);
+						    }
+
+						    studentOutput.close();
+						} catch (IOException e1) {
+						    e1.printStackTrace();
+						}
+						
+						try {
+						    ObjectOutputStream schoolOutput = new ObjectOutputStream(new FileOutputStream("data/schools.bin"));
+
+						    for (School s : schoolsList) {
+						        schoolOutput.writeObject(s);
+						    }
+
+						    schoolOutput.close();
+						} catch (IOException e1) {
+						    e1.printStackTrace();
+						}
+						
                         JOptionPane.showMessageDialog(null, "Cadastro de Aluno Realizado na Escola: " + escola.getName());
                         cardLayout.show(cardPanel, "Cadastro");
 
@@ -580,6 +704,32 @@ public class Main {
                         curso.setProfessor(professor);
                         escola.addCourse(curso);
                         courseList.add(curso);
+                        
+                        try {
+						    ObjectOutputStream courseOutput = new ObjectOutputStream(new FileOutputStream("data/courses.bin"));
+
+						    for (Course c : courseList) {
+						    	courseOutput.writeObject(c);
+						    }
+
+						    courseOutput.close();
+						} catch (IOException e1) {
+						    e1.printStackTrace();
+						}
+						
+						try {
+						    ObjectOutputStream schoolOutput = new ObjectOutputStream(new FileOutputStream("data/schools.bin"));
+
+						    for (School s : schoolsList) {
+						        schoolOutput.writeObject(s);
+						    }
+
+						    schoolOutput.close();
+						} catch (IOException e1) {
+						    e1.printStackTrace();
+						}
+
+						
                         JOptionPane.showMessageDialog(null, "Cadastro de Curso Realizado na Escola: " + escola.getName());
                         cardLayout.show(cardPanel, "Cadastro");
                     } else {

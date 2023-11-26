@@ -6,7 +6,8 @@ public class Course extends Academy {
     private String description;
     private ArrayList<Student> students = new ArrayList<Student>();
     private Professor professor;
-
+    private static final long serialVersionUID = 1l;
+    
     public Course(String name, int ID, int yearOfFoundation, String description, Professor professor) {
         super(name, ID, yearOfFoundation);
         this.description = description;
