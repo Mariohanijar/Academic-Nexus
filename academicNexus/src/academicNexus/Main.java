@@ -861,7 +861,49 @@ public class Main {
                         if (escola.getStudents().contains(aluno)) {
                             curso.addStudent(aluno);
                             aluno.addCourse(curso);
-                            aluno.addExam(new Exam(curso,Integer.parseInt(nota1Field.getText()),Integer.parseInt(nota2Field.getText())));
+                            
+                            try {
+    						    ObjectOutputStream studentOutput = new ObjectOutputStream(new FileOutputStream("data/students.bin"));
+
+    						    for (Student st : studentList) {
+    						    	studentOutput.writeObject(st);
+    						    }
+
+    						    studentOutput.close();
+    						} catch (IOException e1) {
+    						    e1.printStackTrace();
+    						}
+                            
+                            try {
+    						    ObjectOutputStream courseOutput = new ObjectOutputStream(new FileOutputStream("data/courses.bin"));
+
+    						    for (Course c : courseList) {
+    						    	courseOutput.writeObject(c);
+    						    }
+
+    						    courseOutput.close();
+    						} catch (IOException e1) {
+    						    e1.printStackTrace();
+    						}
+                            
+                            Exam exam = new Exam(curso,Integer.parseInt(nota1Field.getText()),Integer.parseInt(nota2Field.getText()));
+                            
+                            aluno.addExam(exam);
+                            
+                            try {
+    						    ObjectOutputStream studentOutput = new ObjectOutputStream(new FileOutputStream("data/students.bin"));
+
+    						    for (Student st : studentList) {
+    						    	studentOutput.writeObject(st);
+    						    }
+
+    						    studentOutput.close();
+    						} catch (IOException e1) {
+    						    e1.printStackTrace();
+    						}
+                            
+                            
+                            
                             JOptionPane.showMessageDialog(null, "Aluno associado ao Curso com sucesso.");
                             cardLayout.show(cardPanel, "Cadastro");
                         } else {

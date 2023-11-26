@@ -62,6 +62,10 @@ public class Student extends Academic {
             }
         }
     }
+    
+    public ArrayList<Exam> getExams() {
+    	return exams;
+    }
 
 	@Override
 	public String toString() {

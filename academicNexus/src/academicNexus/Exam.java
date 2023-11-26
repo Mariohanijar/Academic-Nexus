@@ -1,6 +1,8 @@
 package academicNexus;
 
-public class Exam {
+import java.io.Serializable;
+
+public class Exam implements Serializable {
     private Course course;
     private int[] grades = new int[2];
 
