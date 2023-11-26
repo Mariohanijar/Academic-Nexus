@@ -1,11 +1,14 @@
 package academicNexus;
 
-public abstract class Academic {
+import java.io.Serializable;
+
+public abstract class Academic implements Serializable {
     private String name;
     private String email;
     private int ID;
     private String CPF;
     private String inscriptionDate;
+    private static final long serialVersionUID = 1l;
 
     public Academic(String name, String email, int ID, String CPF, String inscriptionDate) {
         this.name = name;

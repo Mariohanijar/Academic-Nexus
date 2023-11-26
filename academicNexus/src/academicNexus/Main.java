@@ -5,12 +5,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,53 +29,66 @@ public class Main {
 	private static ArrayList<Student> studentList = new ArrayList<>();
 	private static ArrayList<Course> courseList = new ArrayList<>();
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
 
-		File schoolFile = new File("C:\\Users\\carol\\Desktop\\Academic-Nexus\\Data\\schoolData.txt");
-		File studentFile = new File("C:\\Users\\carol\\Desktop\\Academic-Nexus\\Data\\studentsData.txt");
-		File courseFile = new File("C:\\Users\\carol\\Desktop\\Academic-Nexus\\Data\\courseData.txt");
-		File professorsFile = new File("C:\\Users\\carol\\Desktop\\Academic-Nexus\\Data\\professorsData.txt");
-
-		ArrayList<String> schoolData = new ArrayList<>();
-		ArrayList<String> studentData = new ArrayList<>();
-		ArrayList<String> courseData = new ArrayList<>();
-		ArrayList<String> professorData = new ArrayList<>();
-
-		 try (BufferedReader br = new BufferedReader(new FileReader(schoolFile))) {
-	            String line;
-	            while ((line = br.readLine()) != null) {
-	                schoolData.add(line);
-	            }
-	        } catch (IOException e) {
-	            System.out.println("Error: " + e.getMessage());
-	        }
-		 
-		 try (BufferedReader br = new BufferedReader(new FileReader(courseFile))) {
-	            String line;
-	            while ((line = br.readLine()) != null) {
-	                courseData.add(line);
-	            }
-	        } catch (IOException e) {
-	            System.out.println("Error: " + e.getMessage());
-	        }
-		 
-		 try (BufferedReader br = new BufferedReader(new FileReader(studentFile))) {
-	            String line;
-	            while ((line = br.readLine()) != null) {
-	                studentData.add(line);
-	            }
-	        } catch (IOException e) {
-	            System.out.println("Error: " + e.getMessage());
-	        }
-		 
-		 try (BufferedReader br = new BufferedReader(new FileReader(professorsFile))) {
-	            String line;
-	            while ((line = br.readLine()) != null) {
-	            	professorData.add(line);
-	            }
-	        } catch (IOException e) {
-	            System.out.println("Error: " + e.getMessage());
-	        }
+		try (ObjectInputStream schoolInput = new ObjectInputStream(new FileInputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\schools.bin"))) {
+		    while (true) {
+		        School school = (School) schoolInput.readObject();
+		        schoolsList.add(school);
+		    }
+		} catch (EOFException e) {
+		    
+		} catch (IOException | ClassNotFoundException e) {
+		    e.printStackTrace();
+		}
+		
+		try (ObjectInputStream directorInput = new ObjectInputStream(new FileInputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\directors.bin"))) {
+		    while (true) {
+		        Director director = (Director) directorInput.readObject();
+		        directorsList.add(director);
+		    }
+		} catch (EOFException e) {
+		    
+		} catch (IOException | ClassNotFoundException e) {
+		    e.printStackTrace();
+		}
+		
+		try (ObjectInputStream professorInput = new ObjectInputStream(new FileInputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\professors.bin"))) {
+		    while (true) {
+		        Professor professor = (Professor) professorInput.readObject();
+		        professorsList.add(professor);
+		    }
+		} catch (EOFException e) {
+		   
+		} catch (IOException | ClassNotFoundException e) {
+		    e.printStackTrace();
+		}
+		
+		try (ObjectInputStream studentInput = new ObjectInputStream(new FileInputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\students.bin"))) {
+		    while (true) {
+		        Student student = (Student) studentInput.readObject();
+		        studentList.add(student);
+		    }
+		} catch (EOFException e) {
+		   
+		} catch (IOException | ClassNotFoundException e) {
+		    e.printStackTrace();
+		}
+		
+		try (ObjectInputStream courseInput = new ObjectInputStream(new FileInputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\courses.bin"))) {
+		    while (true) {
+		        Course course = (Course) courseInput.readObject();
+		        courseList.add(course);
+		    }
+		} catch (EOFException e) {
+		    
+		} catch (IOException | ClassNotFoundException e) {
+		    e.printStackTrace();
+		}
+	     readObjects("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\directors.bin", directorsList, Director.class);
+	     readObjects("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\professors.bin", professorsList, Professor.class);
+	     readObjects("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\students.bin", studentList, Student.class);
+	     readObjects("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\courses.bin", courseList, Course.class);
 
 		JFrame frame = new JFrame("ACADEMIC NEXUS");
 		frame.setSize(800, 500);
@@ -263,23 +277,35 @@ public class Main {
 							dataContratacaoField.getText());
 
 					School school = new School(nomeInstField.getText(), enderecoInstField.getText(),
-							Integer.parseInt(idInstField.getText()), Integer.parseInt(anoFundacaoInstField.getText()),
-							director);
+						    Integer.parseInt(idInstField.getText()), Integer.parseInt(anoFundacaoInstField.getText()), director);
+						directorsList.add(director);
 
-					directorsList.add(director);
+						try {
+						    ObjectOutputStream directorOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\directors.bin"));
 
-					schoolsList.add(school);
+						    for (Director d : directorsList) {
+						        directorOutput.writeObject(d);
+						    }
 
-					schoolData.add(school.toString());
-
-					try (BufferedWriter bw = new BufferedWriter(new FileWriter(schoolFile, true))) {
-						for (String dataLine : schoolData) {
-							bw.write(dataLine);
-							bw.newLine();
+						    directorOutput.close();
+						} catch (IOException e1) {
+						    e1.printStackTrace();
 						}
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
+
+						schoolsList.add(school);
+
+						try {
+						    ObjectOutputStream schoolOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\schools.bin"));
+
+						    for (School s : schoolsList) {
+						        schoolOutput.writeObject(s);
+						    }
+
+						    schoolOutput.close();
+						} catch (IOException e1) {
+						    e1.printStackTrace();
+						}
+
 
 					JOptionPane.showMessageDialog(null, "        Cadastro Realizado");
 					cardLayout.show(cardPanel, "Cadastro");
@@ -390,18 +416,31 @@ public class Main {
 					if (escola != null) {
 						professorsList.add(professor);
 						escola.addProfessor(professor);
-						
-						professorData.add(professor.toString());
 
-						try (BufferedWriter bw = new BufferedWriter(new FileWriter(professorsFile, true))) {
-							for (String dataLine : professorData) {
-								bw.write(dataLine);
-								bw.newLine();
-							}
+						try {
+						    ObjectOutputStream professorOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\professors.bin"));
+
+						    for (Professor p : professorsList) {
+						    	professorOutput.writeObject(p);
+						    }
+
+						    professorOutput.close();
 						} catch (IOException e1) {
-							e1.printStackTrace();
+						    e1.printStackTrace();
 						}
 						
+						try {
+						    ObjectOutputStream schoolOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\schools.bin"));
+
+						    for (School s : schoolsList) {
+						        schoolOutput.writeObject(s);
+						    }
+
+						    schoolOutput.close();
+						} catch (IOException e1) {
+						    e1.printStackTrace();
+						}
+
 						JOptionPane.showMessageDialog(null,
 								"Cadastro de Professor Realizado na Escola: " + escola.getName());
 						cardLayout.show(cardPanel, "Cadastro");
@@ -513,18 +552,31 @@ public class Main {
 					if (escola != null) {
 						studentList.add(student);
 						escola.addStudent(student);
-						
-						studentData.add(student.toString());
 
-						try (BufferedWriter bw = new BufferedWriter(new FileWriter(studentFile, true))) {
-							for (String dataLine : studentData) {
-								bw.write(dataLine);
-								bw.newLine();
-							}
+						try {
+						    ObjectOutputStream studentOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\students.bin"));
+
+						    for (Student st : studentList) {
+						    	studentOutput.writeObject(st);
+						    }
+
+						    studentOutput.close();
 						} catch (IOException e1) {
-							e1.printStackTrace();
+						    e1.printStackTrace();
 						}
 						
+						try {
+						    ObjectOutputStream schoolOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\schools.bin"));
+
+						    for (School s : schoolsList) {
+						        schoolOutput.writeObject(s);
+						    }
+
+						    schoolOutput.close();
+						} catch (IOException e1) {
+						    e1.printStackTrace();
+						}
+
 						JOptionPane.showMessageDialog(null,
 								"Cadastro de Aluno Realizado na Escola: " + escola.getName());
 						cardLayout.show(cardPanel, "Cadastro");
@@ -645,18 +697,31 @@ public class Main {
 						curso.setProfessor(professor);
 						escola.addCourse(curso);
 						courseList.add(curso);
-						
-						courseData.add(curso.toString());
 
-						try (BufferedWriter bw = new BufferedWriter(new FileWriter(courseFile, true))) {
-							for (String dataLine : courseData) {
-								bw.write(dataLine);
-								bw.newLine();
-							}
+						try {
+						    ObjectOutputStream courseOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\courses.bin"));
+
+						    for (Course c : courseList) {
+						    	courseOutput.writeObject(c);
+						    }
+
+						    courseOutput.close();
 						} catch (IOException e1) {
-							e1.printStackTrace();
+						    e1.printStackTrace();
 						}
 						
+						try {
+						    ObjectOutputStream schoolOutput = new ObjectOutputStream(new FileOutputStream("C:\\Users\\carol\\Desktop\\Academic-Nexus\\academicNexus\\schools.bin"));
+
+						    for (School s : schoolsList) {
+						        schoolOutput.writeObject(s);
+						    }
+
+						    schoolOutput.close();
+						} catch (IOException e1) {
+						    e1.printStackTrace();
+						}
+
 						JOptionPane.showMessageDialog(null,
 								"Cadastro de Curso Realizado na Escola: " + escola.getName());
 						cardLayout.show(cardPanel, "Cadastro");
@@ -927,7 +992,7 @@ public class Main {
 				StringBuilder info = new StringBuilder();
 
 				info.append("\nInformações das Escolas:\n");
-				for (String school : schoolData) {
+				for (School school : schoolsList) {
 					info.append(school.toString()).append("\n");
 				}
 
@@ -1032,4 +1097,15 @@ public class Main {
 		}
 		return true;
 	}
+	
+	 private static <T> void readObjects(String fileName, ArrayList<T> list, Class<T> clazz) throws IOException, ClassNotFoundException {
+	        try (ObjectInputStream objectInput = new ObjectInputStream(new FileInputStream(fileName))) {
+	            while (objectInput.available() > 0) {
+	                T object = clazz.cast(objectInput.readObject());
+	                list.add(object);
+	            }
+	        } catch (EOFException e) {
+	            
+	        }
+	    }
 }

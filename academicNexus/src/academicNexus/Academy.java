@@ -1,9 +1,12 @@
 package academicNexus;
 
-public abstract class Academy {
+import java.io.Serializable;
+
+public abstract class Academy implements Serializable {
     private String name;
     private int ID;
     private int yearOfFoundation;
+    private static final long serialVersionUID = 1l;
 
     public Academy(String name, int ID, int yearOfFoundation) {
         this.name = name;

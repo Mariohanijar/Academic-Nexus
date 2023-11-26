@@ -8,6 +8,7 @@ public class School extends Academy {
     private ArrayList<Course> courses = new ArrayList<Course>();
     private ArrayList<Professor> professors = new ArrayList<Professor>();
     private ArrayList<Student> students = new ArrayList<Student>();
+    private static final long serialVersionUID = 1l;
 
     public School(String name, String adress, int ID, int yearOfFoundation, Director director) {
         super(name, ID, yearOfFoundation);
