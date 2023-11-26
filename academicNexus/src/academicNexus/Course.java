@@ -73,8 +73,6 @@ public class Course extends Academy {
         }
         sumOfSquares /= this.students.size();
         
-        
-
         return Math.sqrt(sumOfSquares);
     }
 

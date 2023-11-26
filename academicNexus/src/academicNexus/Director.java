@@ -8,8 +8,8 @@ public class Director extends Academic {
 
 	@Override
 	public String toString() {
-		return "Director " + getName() + ", email:" + getEmail() + ", ID: " + getID()
-				+ ", CPF: " + getCPF() + ", inscription date: " + getInscriptionDate();
+		return getName() + "\nEmail:" + getEmail() + "\nID: " + getID()
+				+ "\nCPF: " + getCPF() + "\nData de inscrição: " + getInscriptionDate();
 	}
 }
 

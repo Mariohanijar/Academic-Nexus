@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JScrollBar;
+
 
 
 
@@ -85,10 +84,10 @@ public class Main {
 
         JLabel cadastroLabel = new JLabel("Painel de Cadastro");
         cadastroLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-        cadastroLabel.setBounds(266, 11, 193, 30);
+        cadastroLabel.setBounds(272, 23, 300, 30);
 
         JButton voltarInicialButton = new JButton("Voltar");
-        voltarInicialButton.setBounds(126, 398, 100, 30);
+        voltarInicialButton.setBounds(124, 398, 100, 30);
 
         voltarInicialButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -399,16 +398,6 @@ public class Main {
         JTextField nomeAlunoField = new JTextField();
         nomeAlunoField.setBounds(200, 80, 150, 20);
 
-        JLabel nota1 = new JLabel("Nota da Avaliação 1:");
-        nota1.setBounds(50, 80, 150, 20);
-        JTextField nota1Field = new JTextField();
-        nota1Field.setBounds(200, 80, 150, 20);
-        
-        JLabel nota2 = new JLabel("Nota do Avaliação 2:");
-        nota2.setBounds(50, 80, 150, 20);
-        JTextField nota2Field = new JTextField();
-        nota2Field.setBounds(200, 80, 150, 20);
-
         JLabel idAlunoLabel = new JLabel("ID do Aluno:");
         idAlunoLabel.setBounds(50, 110, 150, 20);
         JTextField idAlunoField = new JTextField();
@@ -538,7 +527,7 @@ public class Main {
         descricaoCourseField.setBounds(169, 170, 150, 20);
 
         JLabel escolaCourseLabel = new JLabel("Escolher Escola:");
-        escolaCourseLabel.setBounds(400, 201, 150, 20);
+        escolaCourseLabel.setBounds(400, 80, 150, 20);
 
         String[] SchoolzArray = new String[schoolsList.size()];
         for (int i = 0; i < schoolsList.size(); i++) {
@@ -548,10 +537,10 @@ public class Main {
         }
 
         JTextField escolherEscolaCourse = new JTextField();
-        escolherEscolaCourse.setBounds(540, 201, 150, 20);
+        escolherEscolaCourse.setBounds(540, 80, 150, 20);
 
         JLabel professorCourseLabel = new JLabel("Escolher Professor:");
-        professorCourseLabel.setBounds(400, 230, 150, 20);
+        professorCourseLabel.setBounds(400, 110, 150, 20);
 
         String[] professoresArray = new String[professorsList.size()];
         for (int i = 0; i < professorsList.size(); i++) {
@@ -561,7 +550,7 @@ public class Main {
         }
 
         JTextField escolherProfessorCourse = new JTextField();
-        escolherProfessorCourse.setBounds(540, 230, 150, 20);
+        escolherProfessorCourse.setBounds(540, 110, 150, 20);
 
         JButton enviarCourseButton = new JButton("Enviar");
         enviarCourseButton.setBounds(50, 300, 100, 30);
@@ -647,7 +636,7 @@ public class Main {
         escolherAluno.setBounds(200, 80, 150, 20);
 
         JLabel schoozLabel = new JLabel("Escolher Escola:");
-        schoozLabel.setBounds(400, 141, 150, 20);
+        schoozLabel.setBounds(50, 141, 150, 20);
 
         String[] schoozArray = new String[schoolsList.size()];
         for (int i = 0; i < schoolsList.size(); i++) {
@@ -657,7 +646,7 @@ public class Main {
         }
 
         JTextField chooseSchoolz = new JTextField();
-        chooseSchoolz.setBounds(540, 141, 150, 20);
+        chooseSchoolz.setBounds(200, 141, 150, 20);
 
         JLabel cursoLabel = new JLabel("Escolher Curso:");
         cursoLabel.setBounds(50, 201, 150, 20);
@@ -672,12 +661,28 @@ public class Main {
         JTextField escolherCurso = new JTextField();
         escolherCurso.setBounds(200, 201, 150, 20);
 
+        JLabel nota1Label = new JLabel("Nota 1:");
+        associarAlunoCurso.add(nota1Label);
+        nota1Label.setBounds(447, 80, 66, 20);
+
+        JTextField nota1Field = new JTextField(5);
+        associarAlunoCurso. add(nota1Field);
+        nota1Field.setBounds(523, 80, 150, 20);
+
+        JLabel nota2Label = new JLabel("Nota 2:");
+        associarAlunoCurso.add(nota2Label);
+        nota2Label.setBounds(447, 201, 76, 20);
+
+        JTextField nota2Field = new JTextField(5);
+        associarAlunoCurso.add(nota2Field);
+        nota2Field.setBounds(523, 201, 150, 20);
+        
         JButton associarButton = new JButton("Associar");
         associarButton.setBounds(50, 300, 100, 30);
 
         associarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (camposCadastroPreenchidos(escolherAluno, escolherEscola, escolherCurso)) {
+                if (camposCadastroPreenchidos(escolherAluno, chooseSchoolz, escolherCurso, nota1Field, nota2Field)) {
                     Student aluno = null;
                     for (Student s : studentList) {
                         if (s.getName().equals(escolherAluno.getText())) {
@@ -705,6 +710,8 @@ public class Main {
                     if (aluno != null && escola != null && curso != null) {
                         if (escola.getStudents().contains(aluno)) {
                             curso.addStudent(aluno);
+                            aluno.addCourse(curso);
+                            aluno.addExam(new Exam(curso,Integer.parseInt(nota1Field.getText()),Integer.parseInt(nota2Field.getText())));
                             JOptionPane.showMessageDialog(null, "Aluno associado ao Curso com sucesso.");
                             cardLayout.show(cardPanel, "Cadastro");
                         } else {
@@ -774,7 +781,7 @@ public class Main {
         JTextArea relatorioTextArea = new JTextArea();
         relatorioTextArea.setBounds(28, 209, 700, 200);
         relatorioTextArea.setEditable(false);
-        
+      
 
       
         JButton voltarVerificacaoButton = new JButton("Voltar");
@@ -787,6 +794,7 @@ public class Main {
         });
 
         
+       
         relatorioCursoPanel.add(escolasLabel);
         relatorioCursoPanel.add(escolherCursosLabel);
         relatorioCursoPanel.add(escolherCursosPanel);
@@ -844,7 +852,7 @@ public class Main {
 
         JLabel verificacaoLabel = new JLabel("Painel de Verificação");
         verificacaoLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-        verificacaoLabel.setBounds(302, 21, 300, 30);
+        verificacaoLabel.setBounds(297, 25, 300, 30);
 
         JButton voltarInicialButton2 = new JButton("Voltar");
         voltarInicialButton2.setBounds(175, 395, 100, 30);

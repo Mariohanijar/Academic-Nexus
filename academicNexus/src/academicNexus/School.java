@@ -99,9 +99,9 @@ public class School extends Academy {
 
 	@Override
 	public String toString() {
-		return "Name " + getName() + ", ID: " + getID()
-		+ ", Year of Foundation: " + getYearOfFoundation() + ", adress: " + adress + ", director: " + director + ", courses: " + courses + ", professors: "
-				+ professors + ", students: " + students;
+		return "Nome: " + getName() + "\nID: " + getID()
+		+ "\nAno De Fundação: " + getYearOfFoundation() + "\nEndereço: " + adress + "\nDiretor:" + director + "\nCursos: " + courses + "\nProfessores: "
+				+ professors + "\nEstudantes: " + students;
 	}
 
 }

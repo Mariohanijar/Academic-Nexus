@@ -64,8 +64,8 @@ public class Student extends Academic {
 
 	@Override
 	public String toString() {
-		return "Name: "	+ getName() + ", Email: " + getEmail() + ", ID: " + getID() + ", CPF: " + getCPF()
-				+ ", Inscription Date: " + getInscriptionDate() + "level: " + level + ", Courses: " + courses + ", Exams: " + exams;
+		return "\nNome: "	+ getName() + "\nEmail: " + getEmail() + "\nID: " + getID() + "\nCPF: " + getCPF()
+				+ "\nData de Matricula: " + getInscriptionDate() + "\nNível: " + level + "\nCursos " + courses + "\nExames: " + exams;
 	}
     
 }
