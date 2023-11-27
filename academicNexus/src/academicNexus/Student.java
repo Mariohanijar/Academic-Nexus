@@ -1,6 +1,7 @@
 package academicNexus;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Student extends Academic {
     public String level;
@@ -72,5 +73,22 @@ public class Student extends Academic {
 		return "\nNome: "	+ getName() + "\nEmail: " + getEmail() + "\nID: " + getID() + "\nCPF: " + getCPF()
 				+ "\nData de Matricula: " + getInscriptionDate() + "\nNível: " + level + "\nCursos " + courses + "\nExames: " + exams;
 	}
-    
+	
+	@Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Student student = (Student) obj;
+
+        return Objects.equals(getID(), student.getID());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getID());
+    }
 }
+    
+

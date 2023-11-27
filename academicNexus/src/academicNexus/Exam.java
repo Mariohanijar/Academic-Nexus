@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Exam implements Serializable {
     private Course course;
     private int[] grades = new int[2];
+    
 
     public Exam(Course course, int grade1, int grade2) {
         this.course = course;

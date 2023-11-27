@@ -268,8 +268,6 @@ public class Main {
             public void actionPerformed(ActionEvent e) {
              
             	if (camposCadastroPreenchidos(nomeDirField, idDirField, cpfDirField, emailDirField, dataContratacaoField, nomeInstField, enderecoInstField, idInstField, anoFundacaoInstField)) {
-               
-            		
 
 					Director director = new Director(nomeDirField.getText(), emailDirField.getText(),
 							Integer.parseInt(idDirField.getText()), cpfDirField.getText(),
@@ -537,8 +535,6 @@ public class Main {
             System.out.println("Nome da Escola #" + i + ": " + nomeEscola);
         }
   
-       
-
      
         JButton enviarAlunoButton = new JButton("Enviar");
         enviarAlunoButton.setBounds(50, 300, 100, 30);
@@ -551,7 +547,7 @@ public class Main {
 
                     School escola = null;
                     for (School s : schoolsList) {
-                        if (s.getName().equals(escolherEscola.getText())) {
+                        if (s.getName().equals(escolherSchool.getText())) {
                             escola = s;
                             break;
                         }
@@ -843,12 +839,13 @@ public class Main {
 
                     School escola = null;
                     for (School s : schoolsList) {
-                        if (s.getName().equals(escolherEscola.getText())) {
+                        if (s.getName().equals(chooseSchoolz.getText())) {
                             escola = s;
+                            
                             break;
                         }
                     }
-
+                    
                     Course curso = null;
                     for (Course c : courseList) {
                         if (c.getName().equals(escolherCurso.getText())) {
@@ -856,23 +853,18 @@ public class Main {
                             break;
                         }
                     }
-
+                    
+                   
+                    System.out.println(curso.getStudents());
+                    
                     if (aluno != null && escola != null && curso != null) {
                         if (escola.getStudents().contains(aluno)) {
                             curso.addStudent(aluno);
                             aluno.addCourse(curso);
                             
-                            try {
-    						    ObjectOutputStream studentOutput = new ObjectOutputStream(new FileOutputStream("data/students.bin"));
-
-    						    for (Student st : studentList) {
-    						    	studentOutput.writeObject(st);
-    						    }
-
-    						    studentOutput.close();
-    						} catch (IOException e1) {
-    						    e1.printStackTrace();
-    						}
+                           
+                            System.out.println(curso.getStudents());
+                            System.out.println(escola);
                             
                             try {
     						    ObjectOutputStream courseOutput = new ObjectOutputStream(new FileOutputStream("data/courses.bin"));
@@ -902,15 +894,30 @@ public class Main {
     						    e1.printStackTrace();
     						}
                             
-                            
+                            try {
+    						    ObjectOutputStream schoolOutput = new ObjectOutputStream(new FileOutputStream("data/schools.bin"));
+
+    						    for (School s : schoolsList) {
+    						    	schoolOutput.writeObject(s);
+    						    }
+
+    						    schoolOutput.close();
+    						} catch (IOException e1) {
+    						    e1.printStackTrace();
+    						}
                             
                             JOptionPane.showMessageDialog(null, "Aluno associado ao Curso com sucesso.");
                             cardLayout.show(cardPanel, "Cadastro");
                         } else {
                             JOptionPane.showMessageDialog(null, "O aluno não está matriculado nesta escola.");
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Aluno, Escola ou Curso não encontrado.");
+                    } else if (aluno == null) {
+                        JOptionPane.showMessageDialog(null, "Aluno não encontrado.");
+                    }
+                    else if (escola == null) {
+                        JOptionPane.showMessageDialog(null, "escola não encontrada.");
+                    }else if (curso == null) {
+                        JOptionPane.showMessageDialog(null, "curso não encontrado.");
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos.");
@@ -1019,6 +1026,8 @@ public class Main {
                         break;
                     }
                 }
+                
+                System.out.println(curso.getClassStandardDeviation());
 
                 if (escola != null && curso != null) {
                     // Gerar o relatório
